@@ -14,6 +14,7 @@ export enum UserActionTypes {
   USER_SIGN_IN = 'USER_SIGN_IN',
   USER_SIGN_OUT = 'USER_SIGN_OUT',
   USER_REMEMBER = 'USER_REMEMBER',
+  REMOVE_ERROR = 'REMOVE_ERROR',
 }
 
 interface UserRequest {
@@ -32,6 +33,7 @@ interface UserSignUp {
 
 interface UserSignIn {
   type: UserActionTypes.USER_SIGN_IN;
+  payload: UserInfo;
 }
 
 interface UserSignOut {
@@ -43,10 +45,15 @@ interface UserRemember {
   payload: UserInfo | null;
 }
 
+interface RemoveError {
+  type: UserActionTypes.REMOVE_ERROR;
+}
+
 export type UserAction =
   | UserRequest
   | UserError
   | UserSignUp
   | UserSignIn
   | UserSignOut
-  | UserRemember;
+  | UserRemember
+  | RemoveError;

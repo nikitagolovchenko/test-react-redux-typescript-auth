@@ -1,7 +1,11 @@
-
 export interface SignUpState {
   firstName: string;
   lastName: string;
+  email: string;
+  password: string;
+}
+
+export interface SignInState {
   email: string;
   password: string;
 }

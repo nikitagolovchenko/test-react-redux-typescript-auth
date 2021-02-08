@@ -1,13 +1,15 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ErrorAlert from '../components/ErrorAlert';
+import Spinner from '../components/Spinner/Spinner';
 import Wrapper from '../components/Wrapper';
 import { RootState } from '../store/reducers/rootReducer';
 import { SignUpState } from '../types/LoginTypes';
-import { userSignUp } from './../store/actions/userActions';
+import { userSignUp, removeError } from './../store/actions/userActions';
 import { validateEmail, validatePassword } from './../utils/validation';
 
 const SignUp: React.FC = () => {
+  const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
 
   const [signUpData, setSignUpData] = useState<SignUpState>({
@@ -17,7 +19,10 @@ const SignUp: React.FC = () => {
     password: '',
   });
 
-  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(removeError());
+  }, [])
+
 
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setSignUpData({
@@ -102,6 +107,7 @@ const SignUp: React.FC = () => {
         </div>
       </form>
 
+      {user.loading && <Spinner />}
       {user.error && <ErrorAlert alert={user.error} />}
     </Wrapper>
   );

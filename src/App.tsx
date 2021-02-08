@@ -14,7 +14,7 @@ const App: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(userRemember())
+    dispatch(userRemember());
   }, [])
 
 

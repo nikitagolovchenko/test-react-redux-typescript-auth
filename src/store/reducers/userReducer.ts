@@ -24,14 +24,23 @@ export const userReducer = (
         loading: false,
         user: action.payload,
         authorized: true,
-        error: null
+        error: null,
+      };
+
+    case UserActionTypes.USER_SIGN_IN:
+      return {
+        ...state,
+        loading: false,
+        user: action.payload,
+        authorized: true,
+        error: null,
       };
 
     case UserActionTypes.USER_SIGN_OUT:
       return {
         ...state,
         user: null,
-        authorized: false
+        authorized: false,
       };
 
     case UserActionTypes.USER_REMEMBER:
@@ -39,6 +48,12 @@ export const userReducer = (
         ...state,
         authorized: true,
         user: action.payload ? action.payload : null,
+      };
+
+    case UserActionTypes.REMOVE_ERROR:
+      return {
+        ...state,
+        error: null,
       };
 
     default:
