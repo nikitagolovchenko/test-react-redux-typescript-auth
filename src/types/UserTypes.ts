@@ -1,7 +1,10 @@
+import { UserInfo } from './LoginTypes';
+
 export interface UserState {
   loading: boolean;
   authorized: boolean;
   error: null | string;
+  user: null | UserInfo;
 }
 
 export enum UserActionTypes {
@@ -10,6 +13,7 @@ export enum UserActionTypes {
   USER_SIGN_UP = 'USER_SIGN_UP',
   USER_SIGN_IN = 'USER_SIGN_IN',
   USER_SIGN_OUT = 'USER_SIGN_OUT',
+  USER_REMEMBER = 'USER_REMEMBER',
 }
 
 interface UserRequest {
@@ -23,6 +27,7 @@ interface UserError {
 
 interface UserSignUp {
   type: UserActionTypes.USER_SIGN_UP;
+  payload: UserInfo;
 }
 
 interface UserSignIn {
@@ -33,9 +38,15 @@ interface UserSignOut {
   type: UserActionTypes.USER_SIGN_OUT;
 }
 
+interface UserRemember {
+  type: UserActionTypes.USER_REMEMBER;
+  payload: UserInfo | null;
+}
+
 export type UserAction =
   | UserRequest
   | UserError
   | UserSignUp
   | UserSignIn
-  | UserSignOut;
+  | UserSignOut
+  | UserRemember;

@@ -1,18 +1,16 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import ErrorAlert from '../components/ErrorAlert';
 import Wrapper from '../components/Wrapper';
+import { RootState } from '../store/reducers/rootReducer';
+import { SignUpState } from '../types/LoginTypes';
 import { userSignUp } from './../store/actions/userActions';
 import { validateEmail, validatePassword } from './../utils/validation';
 
-export interface ISignUpState {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-}
-
 const SignUp: React.FC = () => {
-  const [signUpData, setSignUpData] = useState<ISignUpState>({
+  const user = useSelector((state: RootState) => state.user);
+
+  const [signUpData, setSignUpData] = useState<SignUpState>({
     firstName: '',
     lastName: '',
     email: '',
@@ -30,7 +28,6 @@ const SignUp: React.FC = () => {
 
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(signUpData);
     if (
       validateEmail(signUpData.email) &&
       validatePassword(signUpData.password)
@@ -104,6 +101,8 @@ const SignUp: React.FC = () => {
           </button>
         </div>
       </form>
+
+      {user.error && <ErrorAlert alert={user.error} />}
     </Wrapper>
   );
 };

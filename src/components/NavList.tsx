@@ -1,10 +1,16 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
+import { userSignOut } from '../store/actions/userActions';
 import { RootState } from '../store/reducers/rootReducer';
 
 const NavList = () => {
   const user = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch();
+
+  const signOut = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    dispatch(userSignOut());
+  };
 
   return (
     <ul className='nav-list'>
@@ -12,7 +18,7 @@ const NavList = () => {
         <NavLink to='/news'>News</NavLink>
       </li>
 
-      {!user.authorized && (
+      {!user.user && (
         <>
           <li>
             <NavLink to='/sign-up'>Sign Up</NavLink>
@@ -24,14 +30,16 @@ const NavList = () => {
         </>
       )}
 
-      {user.authorized && (
+      {user.user && (
         <>
           <li>
             <NavLink to='/profile'>Profile</NavLink>
           </li>
 
           <li>
-            <Link to='/'>Sign out</Link>
+            <Link to='/' onClick={signOut}>
+              Sign out
+            </Link>
           </li>
         </>
       )}
