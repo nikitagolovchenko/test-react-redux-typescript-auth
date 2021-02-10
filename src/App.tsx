@@ -21,7 +21,9 @@ const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path='/' exact component={Homepage} />
+        <Route path="/" exact>
+          {!user.user ? <Homepage /> : <Redirect to='/profile' /> }
+        </Route>
         <Route path='/news' exact component={NewsPage} />
         <Route path='/profile' exact>
           {user.user ? <ProfilePage /> : <Redirect to='/' />}
